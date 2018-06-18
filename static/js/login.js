@@ -2,14 +2,17 @@ let byId = (id) => { return document.getElementById( id ); };
 
 let login = (ph,type,icon) => ({
   view: function() {
-    return m("p.control.has-icons-left", [
-      m(`input.login-input.input.is-small.is-success[placeholder='${ph}'][type='${type}']`),
-      m("span.icon.is-small.is-left", 
-        m(`i.fa.fa-${icon}`)  )
-    ])
+    return m(".field",
+      m("p.control.has-icons-left", [
+        m("input.login-input.input.is-small.is-success",
+          {placeholder:`${ph}`,type:`${type}`}),
+        m("span.icon.is-small.is-left", 
+          m(`i.fa.fa-${icon}`)  )
+      ])
+    )
   }
 })
-let loginBtn = ({
+let loginBtn = {
   view: function() {
     return m("a.button.is-primary.is-inverted", [
       m("span.icon",
@@ -17,7 +20,14 @@ let loginBtn = ({
       m("span", "Login")
     ])
   }
-})
-m.mount( byId("login_user"),login('Username','text','user'))
-m.mount( byId("login_pass"),login('Password','password','lock'))
-m.mount( byId("login_btn" ),loginBtn)
+}
+let loginBox = {
+  view: function() {
+    return m(".navbar-end", [
+      m("a.navbar-item", m(login('Username','text','user')) ),
+      m("a.navbar-item", m(login('Password','password','lock')) ),
+      m("span.navbar-item", m(loginBtn) )
+    ])
+  }
+}
+m.mount( byId("login_box"), loginBox)
